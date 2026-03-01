@@ -149,7 +149,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 export default function FeaturedProjects() {
   return (
-    <section id="projects" className="mx-auto max-w-6xl px-6 py-20">
+    <section id="projects" className="mx-auto max-w-6xl px-6 py-14">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

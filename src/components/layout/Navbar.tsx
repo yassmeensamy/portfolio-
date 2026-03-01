@@ -43,12 +43,8 @@ export default function Navbar() {
 
       {/* Main nav */}
       <nav className="border-b border-surface bg-background/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/" className="text-xl font-bold text-foreground">
-            Yass<span className="text-primary">.</span>
-          </Link>
-
-          {/* Desktop links */}
+        <div className="relative mx-auto flex max-w-6xl items-center justify-center px-6 py-4">
+          {/* Desktop links — centered */}
           <div className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
               <Link
@@ -59,15 +55,17 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md bg-primary px-5 py-2 text-sm font-semibold text-background transition-opacity hover:opacity-90"
-            >
-              Resume
-            </a>
           </div>
+
+          {/* Resume — pinned right */}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute right-6 hidden rounded-md bg-primary px-5 py-2 text-sm font-semibold text-background transition-opacity hover:opacity-90 md:inline-block"
+          >
+            Resume
+          </a>
 
           {/* Mobile toggle */}
           <button

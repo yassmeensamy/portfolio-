@@ -26,7 +26,7 @@ const contactLinks = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="mx-auto max-w-6xl px-6 py-20">
+    <section id="contact" className="mx-auto max-w-6xl px-6 py-14">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
