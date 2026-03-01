@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Styles Preview — Round 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #1a1a1a; color: #fff; padding: 40px 20px; }
+    h1 { text-align: center; font-size: 28px; margin-bottom: 8px; color: #e4e4e7; }
+    .subtitle { text-align: center; font-size: 14px; color: #71717a; margin-bottom: 48px; }
+    .previews { display: flex; flex-direction: column; gap: 48px; max-width: 960px; margin: 0 auto; }
+
+    .preview-card { border-radius: 16px; overflow: hidden; border: 1px solid #333; }
+    .preview-label {
+      padding: 14px 24px; font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+      background: #111; color: #a1a1aa; display: flex; justify-content: space-between; align-items: center;
+    }
+    .preview-label span { font-weight: 400; font-size: 12px; opacity: 0.7; }
+
+    .page-mock { background: #FBF3F0; min-height: 500px; }
+
+    .hero-mock { padding: 80px 48px 60px; }
+    .hero-mock .greeting { font-size: 14px; font-weight: 500; color: #8B2E2E; margin-bottom: 8px; }
+    .hero-mock h2 { font-size: 40px; font-weight: 700; color: #2A1210; line-height: 1.15; margin-bottom: 12px; }
+    .hero-mock p { font-size: 16px; color: #AB7B75; max-width: 480px; line-height: 1.7; margin-bottom: 28px; }
+    .hero-mock .btns { display: flex; gap: 12px; }
+    .hero-mock .btn-p { padding: 12px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; border: none; background: #8B2E2E; color: #FBF3F0; cursor: pointer; }
+    .hero-mock .btn-s { padding: 12px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 2px solid #8B2E2E; background: transparent; color: #8B2E2E; cursor: pointer; }
+
+    /* ─── STYLE A: Original Classic (kept for reference) ─── */
+    .nav-a {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 48px;
+      background: rgba(251,243,240,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #E8D5CE;
+    }
+    .nav-a .logo { font-weight: 700; font-size: 18px; color: #2A1210; letter-spacing: -0.5px; }
+    .nav-a .logo span { color: #8B2E2E; }
+    .nav-a .links { display: flex; gap: 32px; }
+    .nav-a .links a { text-decoration: none; font-size: 14px; font-weight: 500; color: #AB7B75; }
+    .nav-a .links a:first-child { color: #2A1210; }
+    .nav-a .cta { padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; background: #8B2E2E; color: #FBF3F0; border: none; cursor: pointer; }
+
+    /* ─── STYLE C: Original Minimal Centered (kept for reference) ─── */
+    .nav-c { display: flex; flex-direction: column; align-items: center; padding: 24px 48px 0; gap: 16px; }
+    .nav-c .top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .nav-c .logo { font-weight: 700; font-size: 18px; color: #2A1210; letter-spacing: -0.5px; }
+    .nav-c .logo span { color: #8B2E2E; }
+    .nav-c .cta-link { font-size: 13px; font-weight: 600; color: #8B2E2E; text-decoration: none; border-bottom: 1.5px solid #8B2E2E; padding-bottom: 1px; }
+    .nav-c .links {
+      display: flex; gap: 32px; padding: 12px 0;
+      border-top: 1px solid #E8D5CE; border-bottom: 1px solid #E8D5CE;
+      width: 100%; justify-content: center;
+    }
+    .nav-c .links a { text-decoration: none; font-size: 13px; font-weight: 500; color: #AB7B75; letter-spacing: 0.5px; text-transform: uppercase; }
+    .nav-c .links a:first-child { color: #2A1210; }
+
+    /* ─── STYLE D: Hybrid — A's clean row + C's centered links + thin accent line ─── */
+    .nav-d {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 48px;
+      background: rgba(251,243,240,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #8B2E2E;
+    }
+    .nav-d .logo { font-weight: 700; font-size: 18px; color: #2A1210; letter-spacing: -0.5px; }
+    .nav-d .logo span { color: #8B2E2E; }
+    .nav-d .links {
+      display: flex; gap: 28px;
+      position: absolute; left: 50%; transform: translateX(-50%);
+    }
+    .nav-d .links a { text-decoration: none; font-size: 13px; font-weight: 500; color: #AB7B75; letter-spacing: 0.3px; }
+    .nav-d .links a:first-child { color: #2A1210; }
+    .nav-d .cta-link { font-size: 13px; font-weight: 600; color: #8B2E2E; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+
+    /* ─── STYLE E: Split — Logo + links left, CTA right, subtle surface bg ─── */
+    .nav-e {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 48px;
+      background: #E8D5CE;
+    }
+    .nav-e-left { display: flex; align-items: center; gap: 40px; }
+    .nav-e .logo { font-weight: 700; font-size: 18px; color: #2A1210; letter-spacing: -0.5px; }
+    .nav-e .logo span { color: #8B2E2E; }
+    .nav-e .links { display: flex; gap: 28px; }
+    .nav-e .links a { text-decoration: none; font-size: 13px; font-weight: 500; color: #AB7B75; }
+    .nav-e .links a:first-child { color: #2A1210; }
+    .nav-e .cta { padding: 8px 20px; border-radius: 100px; font-size: 13px; font-weight: 600; background: #8B2E2E; color: #FBF3F0; border: none; cursor: pointer; }
+
+    /* ─── STYLE F: Two-tier elegant — thin top bar + main nav ─── */
+    .nav-f-top {
+      display: flex; justify-content: flex-end; align-items: center; gap: 20px;
+      padding: 8px 48px;
+      background: #2A1210;
+      font-size: 11px; color: rgba(251,243,240,0.6);
+    }
+    .nav-f-top a { text-decoration: none; color: rgba(251,243,240,0.6); }
+    .nav-f-main {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 48px;
+      background: rgba(251,243,240,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #E8D5CE;
+    }
+    .nav-f-main .logo { font-weight: 700; font-size: 20px; color: #2A1210; letter-spacing: -0.5px; }
+    .nav-f-main .logo span { color: #8B2E2E; }
+    .nav-f-main .links { display: flex; gap: 32px; }
+    .nav-f-main .links a { text-decoration: none; font-size: 14px; font-weight: 500; color: #AB7B75; }
+    .nav-f-main .links a:first-child { color: #2A1210; }
+    .nav-f-main .cta { padding: 9px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; background: #8B2E2E; color: #FBF3F0; border: none; cursor: pointer; }
+
+    .relative { position: relative; }
+  </style>
+</head>
+<body>
+  <h1>Navbar — Mix of A + C (3 New Styles)</h1>
+  <p class="subtitle">Combining A's clean row with C's centered elegance</p>
+
+  <div class="previews">
+
+    <!-- Style D: Hybrid -->
+    <div class="preview-card">
+      <div class="preview-label">Style D — Centered Hybrid <span>A's row + C's centered links + ruby accent line</span></div>
+      <div class="page-mock">
+        <nav class="nav-d relative">
+          <div class="logo">Yass<span>.</span></div>
+          <div class="links">
+            <a>Home</a>
+            <a>Projects</a>
+            <a>About</a>
+            <a>Contact</a>
+          </div>
+          <a class="cta-link">Resume ↗</a>
+        </nav>
+        <div class="hero-mock">
+          <div class="greeting">Hello, I'm</div>
+          <h2>Yassmeen<br>Flutter Developer</h2>
+          <p>Building scalable mobile applications with clean architecture, Riverpod, and a passion for great user experiences.</p>
+          <div class="btns">
+            <button class="btn-p">View Projects</button>
+            <button class="btn-s">Contact Me</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style E: Split -->
+    <div class="preview-card">
+      <div class="preview-label">Style E — Surface Bar <span>Logo + links grouped left · Pill CTA right · Surface bg</span></div>
+      <div class="page-mock">
+        <nav class="nav-e">
+          <div class="nav-e-left">
+            <div class="logo">Yass<span>.</span></div>
+            <div class="links">
+              <a>Home</a>
+              <a>Projects</a>
+              <a>About</a>
+              <a>Contact</a>
+            </div>
+          </div>
+          <button class="cta">Resume</button>
+        </nav>
+        <div class="hero-mock">
+          <div class="greeting">Hello, I'm</div>
+          <h2>Yassmeen<br>Flutter Developer</h2>
+          <p>Building scalable mobile applications with clean architecture, Riverpod, and a passion for great user experiences.</p>
+          <div class="btns">
+            <button class="btn-p">View Projects</button>
+            <button class="btn-s">Contact Me</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style F: Two-tier -->
+    <div class="preview-card">
+      <div class="preview-label">Style F — Two-Tier Elegant <span>Dark micro bar on top · Clean main nav below</span></div>
+      <div class="page-mock">
+        <div class="nav-f-top">
+          <a>GitHub</a>
+          <a>LinkedIn</a>
+          <a>your@email.com</a>
+        </div>
+        <nav class="nav-f-main">
+          <div class="logo">Yass<span>.</span></div>
+          <div class="links">
+            <a>Home</a>
+            <a>Projects</a>
+            <a>About</a>
+            <a>Contact</a>
+          </div>
+          <button class="cta">Resume</button>
+        </nav>
+        <div class="hero-mock">
+          <div class="greeting">Hello, I'm</div>
+          <h2>Yassmeen<br>Flutter Developer</h2>
+          <p>Building scalable mobile applications with clean architecture, Riverpod, and a passion for great user experiences.</p>
+          <div class="btns">
+            <button class="btn-p">View Projects</button>
+            <button class="btn-s">Contact Me</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reference: A and C originals -->
+    <div class="preview-card" style="border-color: #555;">
+      <div class="preview-label" style="color: #666;">REF — Original A (Classic Clean) <span>For comparison</span></div>
+      <div class="page-mock">
+        <nav class="nav-a">
+          <div class="logo">Yass<span>.</span></div>
+          <div class="links"><a>Home</a><a>Projects</a><a>About</a><a>Contact</a></div>
+          <button class="cta">Resume</button>
+        </nav>
+        <div class="hero-mock">
+          <div class="greeting">Hello, I'm</div>
+          <h2>Yassmeen<br>Flutter Developer</h2>
+          <p>Building scalable mobile applications with clean architecture, Riverpod, and a passion for great user experiences.</p>
+          <div class="btns"><button class="btn-p">View Projects</button><button class="btn-s">Contact Me</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-card" style="border-color: #555;">
+      <div class="preview-label" style="color: #666;">REF — Original C (Minimal Centered) <span>For comparison</span></div>
+      <div class="page-mock">
+        <nav class="nav-c">
+          <div class="top-row">
+            <div class="logo">Yass<span>.</span></div>
+            <a class="cta-link">Resume ↗</a>
+          </div>
+          <div class="links"><a>Home</a><a>Projects</a><a>About</a><a>Contact</a></div>
+        </nav>
+        <div class="hero-mock">
+          <div class="greeting">Hello, I'm</div>
+          <h2>Yassmeen<br>Flutter Developer</h2>
+          <p>Building scalable mobile applications with clean architecture, Riverpod, and a passion for great user experiences.</p>
+          <div class="btns"><button class="btn-p">View Projects</button><button class="btn-s">Contact Me</button></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

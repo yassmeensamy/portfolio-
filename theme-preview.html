@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Theme Tester</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; transition: background 0.4s, color 0.4s; }
+
+    /* ── Theme Switcher Bar ── */
+    .switcher {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: #111; padding: 12px 24px;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid #333;
+      flex-wrap: wrap;
+    }
+    .switcher-label { color: #999; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-right: 8px; }
+    .theme-btn {
+      padding: 8px 16px; border-radius: 8px; border: 2px solid #333;
+      background: #1a1a1a; color: #ccc; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+    }
+    .theme-btn:hover { border-color: #666; }
+    .theme-btn.active { border-color: #fff; color: #fff; background: #2a2a2a; }
+    .theme-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+    /* ── Page Container ── */
+    .page { margin-top: 64px; transition: background 0.4s, color 0.4s; }
+
+    /* ── Navbar ── */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 48px; position: sticky; top: 64px; z-index: 50;
+      backdrop-filter: blur(12px); transition: all 0.4s;
+    }
+    .logo { font-weight: 700; font-size: 20px; transition: color 0.4s; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.4s; }
+
+    /* ── Sections ── */
+    section { padding: 80px 48px; max-width: 1000px; margin: 0 auto; transition: all 0.4s; }
+
+    /* ── Hero ── */
+    .hero-greeting { font-size: 16px; font-weight: 500; margin-bottom: 12px; transition: color 0.4s; }
+    .hero-title { font-size: 48px; font-weight: 700; line-height: 1.15; margin-bottom: 12px; transition: color 0.4s; }
+    .hero-subtitle { font-size: 18px; line-height: 1.7; max-width: 560px; margin-bottom: 32px; transition: color 0.4s; }
+    .hero-buttons { display: flex; gap: 16px; }
+    .btn-primary {
+      padding: 14px 28px; border-radius: 10px; font-size: 14px; font-weight: 600;
+      border: none; cursor: pointer; transition: all 0.4s;
+    }
+    .btn-secondary {
+      padding: 14px 28px; border-radius: 10px; font-size: 14px; font-weight: 600;
+      background: transparent; cursor: pointer; transition: all 0.4s;
+    }
+
+    /* ── Skills ── */
+    .section-title { font-size: 28px; font-weight: 700; margin-bottom: 32px; transition: color 0.4s; }
+    .skills-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+    .skill-tag {
+      padding: 8px 18px; border-radius: 24px; font-size: 13px; font-weight: 500;
+      transition: all 0.4s;
+    }
+
+    /* ── Projects ── */
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .project-card {
+      border-radius: 16px; padding: 28px; transition: all 0.4s;
+    }
+    .project-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; transition: color 0.4s; }
+    .project-card p { font-size: 14px; line-height: 1.6; margin-bottom: 16px; transition: color 0.4s; }
+    .project-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .project-tag { font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 500; transition: all 0.4s; }
+    .project-link { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 600; text-decoration: none; transition: color 0.4s; }
+
+    /* ── Contact ── */
+    .contact-text { font-size: 16px; line-height: 1.7; max-width: 500px; margin-bottom: 24px; transition: color 0.4s; }
+    .contact-links { display: flex; gap: 16px; }
+    .contact-link {
+      padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      text-decoration: none; transition: all 0.4s;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center; padding: 32px 48px; font-size: 13px;
+      transition: all 0.4s;
+    }
+
+    /* ── Swatches Bar ── */
+    .swatch-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      display: flex; height: 48px;
+    }
+    .swatch-item {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+      transition: all 0.4s;
+    }
+
+    .page { padding-bottom: 64px; }
+  </style>
+</head>
+<body>
+
+  <!-- Theme Switcher -->
+  <div class="switcher">
+    <span class="switcher-label">Theme</span>
+    <button class="theme-btn active" onclick="setTheme('mocha')">
+      <span class="theme-dot" style="background: #A47864;"></span> Mocha Mousse
+    </button>
+    <button class="theme-btn" onclick="setTheme('rumors')">
+      <span class="theme-dot" style="background: #8B2E2E;"></span> Rumors
+    </button>
+    <button class="theme-btn" onclick="setTheme('encore')">
+      <span class="theme-dot" style="background: #0F456E;"></span> Encore
+    </button>
+    <button class="theme-btn" onclick="setTheme('quietude')">
+      <span class="theme-dot" style="background: #5E7363;"></span> Quietude
+    </button>
+    <button class="theme-btn" onclick="setTheme('cinnamon')">
+      <span class="theme-dot" style="background: #897475;"></span> Cinnamon Slate
+    </button>
+  </div>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+      <div class="logo" id="logo">YD</div>
+      <div class="nav-links">
+        <a id="nav1">Home</a>
+        <a id="nav2">Projects</a>
+        <a id="nav3">About</a>
+        <a id="nav4">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section>
+      <div class="hero-greeting" id="greeting">Hello, I'm</div>
+      <h1 class="hero-title" id="heroTitle">Yassmeen<br>Flutter Developer</h1>
+      <p class="hero-subtitle" id="heroSub">Building scalable mobile applications with clean architecture, Riverpod, and a passion for great user experiences.</p>
+      <div class="hero-buttons">
+        <button class="btn-primary" id="btnPrimary">View Projects</button>
+        <button class="btn-secondary" id="btnSecondary">Contact Me</button>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section>
+      <h2 class="section-title" id="skillsTitle">Skills & Technologies</h2>
+      <div class="skills-grid" id="skillsGrid">
+        <span class="skill-tag" data-type="primary">Flutter</span>
+        <span class="skill-tag" data-type="primary">Dart</span>
+        <span class="skill-tag" data-type="primary">Riverpod</span>
+        <span class="skill-tag" data-type="primary">Cubit / Bloc</span>
+        <span class="skill-tag" data-type="muted">REST API</span>
+        <span class="skill-tag" data-type="muted">E2E Testing</span>
+        <span class="skill-tag" data-type="muted">CI/CD</span>
+        <span class="skill-tag" data-type="muted">Firebase</span>
+        <span class="skill-tag" data-type="muted">Git</span>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section>
+      <h2 class="section-title" id="projectsTitle">Featured Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" id="card1">
+          <h3 id="card1Title">E-Commerce App</h3>
+          <p id="card1Desc">A full-featured shopping app with payment integration, push notifications, and offline support.</p>
+          <div class="project-tags">
+            <span class="project-tag" data-type="tag">Flutter</span>
+            <span class="project-tag" data-type="tag">Riverpod</span>
+            <span class="project-tag" data-type="tag">Stripe</span>
+          </div>
+          <a class="project-link" id="card1Link">Read Case Study →</a>
+        </div>
+        <div class="project-card" id="card2">
+          <h3 id="card2Title">Health Tracker</h3>
+          <p id="card2Desc">Real-time health monitoring dashboard with charts, Bluetooth device sync, and data export.</p>
+          <div class="project-tags">
+            <span class="project-tag" data-type="tag">Flutter</span>
+            <span class="project-tag" data-type="tag">Cubit</span>
+            <span class="project-tag" data-type="tag">BLE</span>
+          </div>
+          <a class="project-link" id="card2Link">Read Case Study →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section>
+      <h2 class="section-title" id="contactTitle">Get In Touch</h2>
+      <p class="contact-text" id="contactDesc">I'm currently open to new opportunities. Whether you have a project in mind or just want to connect, feel free to reach out.</p>
+      <div class="contact-links">
+        <a class="contact-link" id="contactBtn1">Email Me</a>
+        <a class="contact-link" id="contactBtn2">GitHub</a>
+        <a class="contact-link" id="contactBtn3">LinkedIn</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer" id="footer">
+      Built with Next.js — Designed with care — © 2026 Yassmeen
+    </div>
+  </div>
+
+  <!-- Color Swatches Bar -->
+  <div class="swatch-bar" id="swatchBar">
+    <div class="swatch-item" id="sw1"></div>
+    <div class="swatch-item" id="sw2"></div>
+    <div class="swatch-item" id="sw3"></div>
+    <div class="swatch-item" id="sw4"></div>
+    <div class="swatch-item" id="sw5"></div>
+  </div>
+
+  <script>
+    const themes = {
+      mocha: {
+        name: 'Mocha Mousse',
+        brand: 'Pantone 2025',
+        bg: '#FBF6F1',
+        surface: '#E8DDD4',
+        primary: '#A47864',
+        deep: '#7C5849',
+        text: '#3B2D22',
+        muted: '#957C71',
+        navBg: 'rgba(251,246,241,0.85)',
+        border: '#E8DDD4',
+      },
+      rumors: {
+        name: 'Rumors',
+        brand: 'Behr 2025',
+        bg: '#FBF3F0',
+        surface: '#E8D5CE',
+        primary: '#8B2E2E',
+        deep: '#CC736B',
+        text: '#2A1210',
+        muted: '#AB7B75',
+        navBg: 'rgba(251,243,240,0.85)',
+        border: '#E8D5CE',
+      },
+      encore: {
+        name: 'Encore',
+        brand: 'Valspar 2025',
+        bg: '#F2F5F8',
+        surface: '#D4DEE8',
+        primary: '#0F456E',
+        deep: '#3A7AB5',
+        text: '#0A1E33',
+        muted: '#7A92A8',
+        navBg: 'rgba(242,245,248,0.85)',
+        border: '#D4DEE8',
+      },
+      quietude: {
+        name: 'Quietude',
+        brand: 'Sherwin Williams 2025',
+        bg: '#F4F6F2',
+        surface: '#D6DDD4',
+        primary: '#5E7363',
+        deep: '#ADBBB2',
+        text: '#2C3B30',
+        muted: '#8A9B8F',
+        navBg: 'rgba(244,246,242,0.85)',
+        border: '#D6DDD4',
+      },
+      cinnamon: {
+        name: 'Cinnamon Slate',
+        brand: 'Benjamin Moore 2025',
+        bg: '#F7F2F0',
+        surface: '#E0D4D0',
+        primary: '#897475',
+        deep: '#B5A2A0',
+        text: '#3D2C2D',
+        muted: '#B5A2A0',
+        navBg: 'rgba(247,242,240,0.85)',
+        border: '#E0D4D0',
+      },
+    };
+
+    function setTheme(key) {
+      const t = themes[key];
+
+      // Switcher buttons
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      // Page bg
+      document.querySelector('.page').style.background = t.bg;
+
+      // Navbar
+      const nav = document.getElementById('navbar');
+      nav.style.background = t.navBg;
+      nav.style.borderBottom = `1px solid ${t.border}`;
+      document.getElementById('logo').style.color = t.primary;
+      document.getElementById('nav1').style.color = t.text;
+      document.getElementById('nav2').style.color = t.muted;
+      document.getElementById('nav3').style.color = t.muted;
+      document.getElementById('nav4').style.color = t.muted;
+
+      // Hero
+      document.getElementById('greeting').style.color = t.primary;
+      document.getElementById('heroTitle').style.color = t.text;
+      document.getElementById('heroSub').style.color = t.muted;
+
+      // Buttons
+      const btnP = document.getElementById('btnPrimary');
+      btnP.style.background = t.primary;
+      btnP.style.color = t.bg;
+      const btnS = document.getElementById('btnSecondary');
+      btnS.style.background = 'transparent';
+      btnS.style.border = `2px solid ${t.primary}`;
+      btnS.style.color = t.primary;
+
+      // Section titles
+      document.getElementById('skillsTitle').style.color = t.text;
+      document.getElementById('projectsTitle').style.color = t.text;
+      document.getElementById('contactTitle').style.color = t.text;
+
+      // Skills
+      document.querySelectorAll('.skill-tag').forEach(tag => {
+        if (tag.dataset.type === 'primary') {
+          tag.style.background = t.primary;
+          tag.style.color = t.bg;
+        } else {
+          tag.style.background = t.surface;
+          tag.style.color = t.muted;
+        }
+      });
+
+      // Project cards
+      ['card1', 'card2'].forEach(id => {
+        document.getElementById(id).style.background = t.surface;
+        document.getElementById(id).style.border = `1px solid ${t.border}`;
+        document.getElementById(id + 'Title').style.color = t.text;
+        document.getElementById(id + 'Desc').style.color = t.muted;
+        document.getElementById(id + 'Link').style.color = t.primary;
+      });
+
+      // Project tags
+      document.querySelectorAll('.project-tag').forEach(tag => {
+        tag.style.background = t.bg;
+        tag.style.color = t.primary;
+      });
+
+      // Contact
+      document.getElementById('contactDesc').style.color = t.muted;
+      const cb1 = document.getElementById('contactBtn1');
+      cb1.style.background = t.primary;
+      cb1.style.color = t.bg;
+      const cb2 = document.getElementById('contactBtn2');
+      cb2.style.background = t.surface;
+      cb2.style.color = t.text;
+      const cb3 = document.getElementById('contactBtn3');
+      cb3.style.background = t.surface;
+      cb3.style.color = t.text;
+
+      // Footer
+      document.getElementById('footer').style.color = t.muted;
+      document.getElementById('footer').style.borderTop = `1px solid ${t.border}`;
+
+      // Swatches
+      const swData = [
+        { el: 'sw1', bg: t.bg, color: t.muted, label: `BG ${t.bg}` },
+        { el: 'sw2', bg: t.surface, color: t.text, label: `Surface ${t.surface}` },
+        { el: 'sw3', bg: t.primary, color: t.bg, label: `Primary ${t.primary}` },
+        { el: 'sw4', bg: t.muted, color: t.bg, label: `Muted ${t.muted}` },
+        { el: 'sw5', bg: t.text, color: t.bg, label: `Text ${t.text}` },
+      ];
+      swData.forEach(s => {
+        const el = document.getElementById(s.el);
+        el.style.background = s.bg;
+        el.style.color = s.color;
+        el.textContent = s.label;
+      });
+    }
+
+    // Init with Mocha Mousse
+    window.onload = () => {
+      document.querySelector('.theme-btn').click();
+    };
+  </script>
+</body>
+</html>

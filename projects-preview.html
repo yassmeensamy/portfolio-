@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Featured Projects — 3 Styles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #1a1a1a; color: #fff; padding: 40px 20px; }
+    h1 { text-align: center; font-size: 28px; margin-bottom: 8px; color: #e4e4e7; }
+    .subtitle { text-align: center; font-size: 14px; color: #71717a; margin-bottom: 48px; }
+    .previews { display: flex; flex-direction: column; gap: 48px; max-width: 1100px; margin: 0 auto; }
+
+    .preview-card { border-radius: 16px; overflow: hidden; border: 1px solid #333; }
+    .preview-label {
+      padding: 14px 24px; font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+      background: #111; color: #a1a1aa; display: flex; justify-content: space-between; align-items: center;
+    }
+    .preview-label span { font-weight: 400; font-size: 12px; opacity: 0.7; }
+
+    .page { background: #FBF3F0; padding: 48px; overflow: hidden; }
+
+    /* ── Shared: Section Header ── */
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+    .section-header h2 { font-size: 30px; font-weight: 800; color: #2A1210; }
+    .view-all {
+      font-size: 14px; font-weight: 600; color: #8B2E2E; text-decoration: none;
+      display: flex; align-items: center; gap: 6px; transition: opacity 0.2s;
+    }
+    .view-all:hover { opacity: 0.7; }
+
+    /* ── Shared: Thumbnail Area ── */
+    .thumb {
+      width: 100%; aspect-ratio: 16/10; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .thumb-1 { background: linear-gradient(135deg, #8B2E2E 0%, #CC736B 100%); }
+    .thumb-2 { background: linear-gradient(135deg, #CC736B 0%, #E8D5CE 100%); }
+    .thumb-3 { background: linear-gradient(135deg, #2A1210 0%, #8B2E2E 100%); }
+
+    /* ── Multi-Screen Fan Mockup ── */
+    .mockup-fan {
+      position: relative;
+      width: 180px; height: 160px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mockup-fan .phone {
+      position: absolute;
+      width: 70px; height: 140px;
+      border-radius: 12px;
+      border: 3px solid rgba(251,243,240,0.5);
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .mockup-fan .phone img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+    }
+    /* Back-left screen */
+    .mockup-fan .phone-back-left {
+      z-index: 1;
+      transform: translateX(-48px) rotate(-12deg) scale(0.85);
+      opacity: 0.7;
+    }
+    /* Back-right screen */
+    .mockup-fan .phone-back-right {
+      z-index: 1;
+      transform: translateX(48px) rotate(12deg) scale(0.85);
+      opacity: 0.7;
+    }
+    /* Front center screen (hero) */
+    .mockup-fan .phone-front {
+      z-index: 2;
+      transform: scale(1);
+    }
+
+    /* Placeholder phone for projects without screenshots */
+    .mockup-fan .phone-placeholder {
+      background: rgba(251,243,240,0.1);
+      border-color: rgba(251,243,240,0.4);
+    }
+    .mockup-fan .phone-placeholder::before {
+      content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+      width: 20px; height: 4px; border-radius: 2px; background: rgba(251,243,240,0.25);
+    }
+    .mockup-fan .phone-placeholder::after {
+      content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      width: 16px; height: 3px; border-radius: 2px; background: rgba(251,243,240,0.25);
+    }
+
+    /* ── Shared: Badges ── */
+    .featured-badge {
+      position: absolute; top: 12px; left: 12px; z-index: 4;
+      padding: 4px 12px; border-radius: 100px;
+      background: #8B2E2E; color: #FBF3F0;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .year-badge {
+      position: absolute; top: 12px; right: 12px; z-index: 4;
+      padding: 4px 10px; border-radius: 6px;
+      background: rgba(42,18,16,0.7); color: #FBF3F0;
+      font-size: 11px; font-weight: 600;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Shared: UI Elements ── */
+    .role { font-size: 12px; font-weight: 600; color: #CC736B; text-transform: uppercase; letter-spacing: 0.5px; }
+    .impact {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600; color: #8B2E2E;
+    }
+    .impact::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #CC736B; }
+    .tag {
+      padding: 4px 12px; border-radius: 100px;
+      background: #FBF3F0; color: #8B2E2E;
+      font-size: 11px; font-weight: 600; border: 1px solid #E8D5CE;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .btn-github {
+      padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600;
+      border: 1.5px solid #2A1210; background: transparent; color: #2A1210;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.2s; text-decoration: none;
+    }
+    .btn-github:hover { background: #2A1210; color: #FBF3F0; }
+    .btn-live {
+      padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600;
+      border: none; background: #8B2E2E; color: #FBF3F0;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.2s; text-decoration: none;
+    }
+    .btn-live:hover { background: #CC736B; }
+    .cta-row { display: flex; gap: 10px; }
+
+    /* ════════════════════════════════════════════
+       STYLE A — Editorial Cards
+       ════════════════════════════════════════════ */
+    .grid-a { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    .card-a {
+      border-radius: 16px; overflow: hidden;
+      background: rgba(232,213,206,0.4);
+      border: 1px solid #E8D5CE;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-a:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(42,18,16,0.1);
+    }
+    .card-a .thumb { border-radius: 0; }
+    .card-a .mockup-fan { transition: transform 0.3s ease; }
+    .card-a:hover .mockup-fan { transform: scale(1.05); }
+
+    .card-a-body {
+      padding: 20px 24px 24px;
+      display: flex; flex-direction: column; gap: 10px; flex: 1;
+    }
+    .card-a-body h3 { font-size: 18px; font-weight: 700; color: #2A1210; }
+    .card-a-body .summary { font-size: 13px; color: #AB7B75; line-height: 1.7; flex: 1; }
+    .card-a .cta-row { margin-top: 6px; }
+
+    /* ════════════════════════════════════════════
+       STYLE B — Alternating Showcase
+       ════════════════════════════════════════════ */
+    .stack-b { display: flex; flex-direction: column; gap: 32px; }
+
+    .card-b {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border-radius: 16px; overflow: hidden;
+      background: rgba(232,213,206,0.4);
+      border: 1px solid #E8D5CE;
+      transition: box-shadow 0.3s ease;
+    }
+    .card-b:hover { box-shadow: 0 20px 40px rgba(42,18,16,0.1); }
+
+    .card-b .card-b-image { order: 1; }
+    .card-b .card-b-content { order: 2; }
+    .card-b.reverse .card-b-image { order: 2; }
+    .card-b.reverse .card-b-content { order: 1; }
+
+    .card-b-image { min-height: 300px; }
+    .card-b-image .thumb { height: 100%; aspect-ratio: auto; border-radius: 0; }
+    .card-b .mockup-fan { width: 220px; height: 190px; transition: transform 0.4s ease; }
+    .card-b .mockup-fan .phone { width: 80px; height: 160px; }
+    .card-b .mockup-fan .phone-back-left { transform: translateX(-56px) rotate(-12deg) scale(0.85); }
+    .card-b .mockup-fan .phone-back-right { transform: translateX(56px) rotate(12deg) scale(0.85); }
+    .card-b:hover .mockup-fan { transform: scale(1.05); }
+
+    .card-b-content {
+      padding: 32px; display: flex; flex-direction: column; gap: 12px; justify-content: center;
+    }
+    .card-b-content h3 { font-size: 22px; font-weight: 800; color: #2A1210; }
+    .card-b-content .summary { font-size: 14px; color: #AB7B75; line-height: 1.8; }
+    .card-b .cta-row { margin-top: 4px; }
+
+    /* ════════════════════════════════════════════
+       STYLE C — Visual Grid + Hover Overlay
+       ════════════════════════════════════════════ */
+    .grid-c { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    .card-c {
+      border-radius: 16px; overflow: hidden; position: relative;
+      aspect-ratio: 3/4; cursor: pointer;
+    }
+    .card-c .thumb {
+      position: absolute; inset: 0; border-radius: 0; aspect-ratio: auto;
+    }
+    .card-c .featured-badge { z-index: 5; }
+    .card-c .year-badge { z-index: 5; }
+    .card-c .mockup-fan { width: 200px; height: 180px; }
+    .card-c .mockup-fan .phone { width: 76px; height: 150px; }
+    .card-c .mockup-fan .phone-back-left { transform: translateX(-52px) rotate(-12deg) scale(0.85); }
+    .card-c .mockup-fan .phone-back-right { transform: translateX(52px) rotate(12deg) scale(0.85); }
+
+    /* Default: title bar at bottom */
+    .card-c .title-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+      padding: 24px;
+      background: linear-gradient(to top, rgba(42,18,16,0.85) 0%, transparent 100%);
+      transition: opacity 0.25s;
+    }
+    .card-c .title-bar h3 { font-size: 18px; font-weight: 700; color: #FBF3F0; }
+    .card-c .title-bar .role { color: #CC736B; margin-bottom: 4px; }
+
+    /* Hover: overlay slides up */
+    .card-c .overlay {
+      position: absolute; inset: 0; z-index: 3;
+      background: rgba(42,18,16,0.92);
+      padding: 28px 24px;
+      display: flex; flex-direction: column; justify-content: flex-end; gap: 10px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .card-c:hover .overlay { opacity: 1; transform: translateY(0); }
+    .card-c:hover .title-bar { opacity: 0; }
+
+    .card-c .overlay h3 { font-size: 20px; font-weight: 700; color: #FBF3F0; }
+    .card-c .overlay .role { color: #CC736B; }
+    .card-c .overlay .summary { font-size: 13px; color: rgba(251,243,240,0.7); line-height: 1.7; }
+    .card-c .overlay .impact { color: #CC736B; }
+    .card-c .overlay .impact::before { background: #CC736B; }
+    .card-c .overlay .tag {
+      background: rgba(251,243,240,0.1); color: rgba(251,243,240,0.8);
+      border-color: rgba(251,243,240,0.15);
+    }
+    .card-c .overlay .btn-github {
+      border-color: rgba(251,243,240,0.4); color: #FBF3F0;
+    }
+    .card-c .overlay .btn-github:hover { background: #FBF3F0; color: #2A1210; }
+    .card-c .overlay .btn-live { background: #8B2E2E; }
+    .card-c .overlay .btn-live:hover { background: #CC736B; }
+  </style>
+</head>
+<body>
+  <h1>Featured Projects — Upgraded Section</h1>
+  <p class="subtitle">3 layout styles with real multi-screen mockups, CTAs, roles, metrics & hover effects</p>
+
+  <div class="previews">
+
+    <!-- ═══════════════════════════════════════════════
+         STYLE A — Editorial Cards
+         ═══════════════════════════════════════════════ -->
+    <div class="preview-card">
+      <div class="preview-label">Style A — Editorial Cards <span>3-column grid · multi-screen fan mockup · card lift on hover</span></div>
+      <div class="page">
+        <div class="section-header">
+          <h2>Featured Projects</h2>
+          <a href="#" class="view-all">View all &rarr;</a>
+        </div>
+        <div class="grid-a">
+
+          <!-- Project 1: Sekoon (Featured — real screenshots) -->
+          <div class="card-a">
+            <div class="thumb thumb-1">
+              <span class="featured-badge">Featured</span>
+              <span class="year-badge">2024</span>
+              <div class="mockup-fan">
+                <div class="phone phone-back-left"><img src="sekoon2.png" alt="Session details"></div>
+                <div class="phone phone-front"><img src="sukkoon1.png" alt="Home screen"></div>
+                <div class="phone phone-back-right"><img src="sekkon3.png" alt="Patient profile"></div>
+              </div>
+            </div>
+            <div class="card-a-body">
+              <div class="role">Solo Developer</div>
+              <h3>Sekoon — Mental Health</h3>
+              <p class="summary">Therapy platform connecting patients with specialists. Includes session booking, assessments, real-time analytics, and doctor dashboard.</p>
+              <div class="impact">24+ Patients Managed</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Riverpod</span>
+                <span class="tag">Firebase</span>
+                <span class="tag">REST API</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">Play Store &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Health Tracker (placeholders) -->
+          <div class="card-a">
+            <div class="thumb thumb-2">
+              <span class="year-badge">2024</span>
+              <div class="mockup-fan">
+                <div class="phone phone-back-left phone-placeholder"></div>
+                <div class="phone phone-front phone-placeholder"></div>
+                <div class="phone phone-back-right phone-placeholder"></div>
+              </div>
+            </div>
+            <div class="card-a-body">
+              <div class="role">Lead Mobile Dev</div>
+              <h3>Health Tracker</h3>
+              <p class="summary">Real-time health monitoring dashboard with Bluetooth device sync, charts, and data export capabilities.</p>
+              <div class="impact">99.5% crash-free</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Cubit</span>
+                <span class="tag">BLE</span>
+                <span class="tag">Firebase</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">App Store &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Task Management (placeholders) -->
+          <div class="card-a">
+            <div class="thumb thumb-3">
+              <span class="year-badge">2023</span>
+              <div class="mockup-fan">
+                <div class="phone phone-back-left phone-placeholder"></div>
+                <div class="phone phone-front phone-placeholder"></div>
+                <div class="phone phone-back-right phone-placeholder"></div>
+              </div>
+            </div>
+            <div class="card-a-body">
+              <div class="role">Solo Developer</div>
+              <h3>Task Management</h3>
+              <p class="summary">Collaborative task management tool with real-time updates, role-based access, and calendar integration.</p>
+              <div class="impact">Real-time sync</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Riverpod</span>
+                <span class="tag">REST API</span>
+                <span class="tag">WebSocket</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">Live Demo &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         STYLE B — Alternating Showcase
+         ═══════════════════════════════════════════════ -->
+    <div class="preview-card">
+      <div class="preview-label">Style B — Alternating Showcase <span>Full-width rows · image alternates sides · storytelling layout</span></div>
+      <div class="page">
+        <div class="section-header">
+          <h2>Featured Projects</h2>
+          <a href="#" class="view-all">View all &rarr;</a>
+        </div>
+        <div class="stack-b">
+
+          <!-- Project 1: Sekoon (Normal order — real screenshots) -->
+          <div class="card-b">
+            <div class="card-b-image">
+              <div class="thumb thumb-1">
+                <span class="featured-badge">Featured</span>
+                <span class="year-badge">2024</span>
+                <div class="mockup-fan">
+                  <div class="phone phone-back-left"><img src="sekoon2.png" alt="Session details"></div>
+                  <div class="phone phone-front"><img src="sukkoon1.png" alt="Home screen"></div>
+                  <div class="phone phone-back-right"><img src="sekkon3.png" alt="Patient profile"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-b-content">
+              <div class="role">Solo Developer</div>
+              <h3>Sekoon — Mental Health</h3>
+              <p class="summary">Therapy platform connecting patients with specialists. Includes session booking, assessments, real-time analytics, and doctor dashboard.</p>
+              <div class="impact">24+ Patients Managed</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Riverpod</span>
+                <span class="tag">Firebase</span>
+                <span class="tag">REST API</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">Play Store &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Health Tracker (Reversed — placeholders) -->
+          <div class="card-b reverse">
+            <div class="card-b-image">
+              <div class="thumb thumb-2">
+                <span class="year-badge">2024</span>
+                <div class="mockup-fan">
+                  <div class="phone phone-back-left phone-placeholder"></div>
+                  <div class="phone phone-front phone-placeholder"></div>
+                  <div class="phone phone-back-right phone-placeholder"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-b-content">
+              <div class="role">Lead Mobile Dev</div>
+              <h3>Health Tracker</h3>
+              <p class="summary">Real-time health monitoring dashboard with Bluetooth device sync, charts, and data export capabilities.</p>
+              <div class="impact">99.5% crash-free</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Cubit</span>
+                <span class="tag">BLE</span>
+                <span class="tag">Firebase</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">App Store &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Task Management (Normal order — placeholders) -->
+          <div class="card-b">
+            <div class="card-b-image">
+              <div class="thumb thumb-3">
+                <span class="year-badge">2023</span>
+                <div class="mockup-fan">
+                  <div class="phone phone-back-left phone-placeholder"></div>
+                  <div class="phone phone-front phone-placeholder"></div>
+                  <div class="phone phone-back-right phone-placeholder"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-b-content">
+              <div class="role">Solo Developer</div>
+              <h3>Task Management</h3>
+              <p class="summary">Collaborative task management tool with real-time updates, role-based access, and calendar integration.</p>
+              <div class="impact">Real-time sync</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Riverpod</span>
+                <span class="tag">REST API</span>
+                <span class="tag">WebSocket</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">Live Demo &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         STYLE C — Visual Grid + Hover Overlay
+         ═══════════════════════════════════════════════ -->
+    <div class="preview-card">
+      <div class="preview-label">Style C — Visual Grid + Hover <span>Image-dominant grid · dark overlay reveals details on hover</span></div>
+      <div class="page">
+        <div class="section-header">
+          <h2>Featured Projects</h2>
+          <a href="#" class="view-all">View all &rarr;</a>
+        </div>
+        <div class="grid-c">
+
+          <!-- Project 1: Sekoon (Featured — real screenshots) -->
+          <div class="card-c">
+            <div class="thumb thumb-1">
+              <span class="featured-badge">Featured</span>
+              <span class="year-badge">2024</span>
+              <div class="mockup-fan">
+                <div class="phone phone-back-left"><img src="sekoon2.png" alt="Session details"></div>
+                <div class="phone phone-front"><img src="sukkoon1.png" alt="Home screen"></div>
+                <div class="phone phone-back-right"><img src="sekkon3.png" alt="Patient profile"></div>
+              </div>
+            </div>
+            <div class="title-bar">
+              <div class="role">Solo Developer</div>
+              <h3>Sekoon — Mental Health</h3>
+            </div>
+            <div class="overlay">
+              <div class="role">Solo Developer</div>
+              <h3>Sekoon — Mental Health</h3>
+              <p class="summary">Therapy platform connecting patients with specialists. Session booking, assessments, analytics, and doctor dashboard.</p>
+              <div class="impact">24+ Patients Managed</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Riverpod</span>
+                <span class="tag">Firebase</span>
+                <span class="tag">REST API</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">Play Store &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Health Tracker (placeholders) -->
+          <div class="card-c">
+            <div class="thumb thumb-2">
+              <span class="year-badge">2024</span>
+              <div class="mockup-fan">
+                <div class="phone phone-back-left phone-placeholder"></div>
+                <div class="phone phone-front phone-placeholder"></div>
+                <div class="phone phone-back-right phone-placeholder"></div>
+              </div>
+            </div>
+            <div class="title-bar">
+              <div class="role">Lead Mobile Dev</div>
+              <h3>Health Tracker</h3>
+            </div>
+            <div class="overlay">
+              <div class="role">Lead Mobile Dev</div>
+              <h3>Health Tracker</h3>
+              <p class="summary">Real-time health monitoring dashboard with Bluetooth device sync, charts, and data export capabilities.</p>
+              <div class="impact">99.5% crash-free</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Cubit</span>
+                <span class="tag">BLE</span>
+                <span class="tag">Firebase</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">App Store &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Task Management (placeholders) -->
+          <div class="card-c">
+            <div class="thumb thumb-3">
+              <span class="year-badge">2023</span>
+              <div class="mockup-fan">
+                <div class="phone phone-back-left phone-placeholder"></div>
+                <div class="phone phone-front phone-placeholder"></div>
+                <div class="phone phone-back-right phone-placeholder"></div>
+              </div>
+            </div>
+            <div class="title-bar">
+              <div class="role">Solo Developer</div>
+              <h3>Task Management</h3>
+            </div>
+            <div class="overlay">
+              <div class="role">Solo Developer</div>
+              <h3>Task Management</h3>
+              <p class="summary">Collaborative task management tool with real-time updates, role-based access, and calendar integration.</p>
+              <div class="impact">Real-time sync</div>
+              <div class="tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Riverpod</span>
+                <span class="tag">REST API</span>
+                <span class="tag">WebSocket</span>
+              </div>
+              <div class="cta-row">
+                <button class="btn-github">GitHub</button>
+                <button class="btn-live">Live Demo &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
